@@ -36,21 +36,12 @@ def soft(a, sigma):
     return (np.abs(a)/a) * np.maximum((np.abs(a) - sigma),0)
 
 def square_err(coeff, feas_rates, actual_rate):
-    #print(coeff)
-    #print(feas_rates[:1, :len(coeff)])
-    #print(np.dot(coeff, feas_rates[0:1, :len(feas_rates)]))
-    #print(actual_rate)
+    model_rate = np.dot(feas_rates, coeff)
     result_y = 0
-    for i in range(0, len(coeff)):
-        ith_com_feas = feas_rates[i:i+1, :len(coeff)]
-        rows, columns = np.shape(ith_com_feas)
-        y_i = 0
-        print(ith_com_feas[0][0])
-        #for j in range(0, columns):
-            #y_i += ith_com_feas[j]
-        result_y += (actual_rate - y_i)**2
+    error_vec = actual_rate - model_rate
+    error_sqr = np.sum(np.square(error_vec))
 
-    print(result_y)
+    print(error_sqr)
 
 def main():
     df_train = pd.read_table("crime-train.txt")
@@ -60,7 +51,7 @@ def main():
     feas_rates = arr_train[:data_rows, 1:data_columns]
     crime_rates = arr_train[:data_rows, :1]
     #print(crime_rates)
-    coeff = lasso_solver(4, feas_rates, crime_rates)
+    coeff = lasso_solver(600, feas_rates, crime_rates)
     #print(coeff)
     square_err(coeff, feas_rates, crime_rates)
 
