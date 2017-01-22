@@ -68,7 +68,7 @@ five_feas = [age, pctWS, pctKids, pctIll, housVaca]
 
 
 while(lambda_ > 1):
-    #coeff = lasso_solver(np.log(lambda_), feas_rates, crime_rates)
+    coeff = lasso_solver(np.log(lambda_), feas_rates, crime_rates)
     # 5.2
     #
     # shape = ["ro","y^","bs","gp","g*"]
@@ -81,9 +81,9 @@ while(lambda_ > 1):
     # lambda_ /= 2
 
     # 5.4
-    # RSS = square_err(coeff, feas_rates_test, crime_rates_test)
-    # plt.plot(np.log(lambda_), RSS, "ro")
-    # lambda_ /= 2
+    RSS = square_err(coeff, feas_rates_test, crime_rates_test)
+    plt.plot(np.log(lambda_), RSS, "ro")
+    lambda_ /= 2
 
     # 5.5
     # coeff = lasso_solver(lambda_, feas_rates, crime_rates)
@@ -95,18 +95,18 @@ while(lambda_ > 1):
     # coeff = lasso_solver(lambda_, feas_rates, crime_rates)
     # RSS = square_err(coeff, feas_rates_test, crime_rates_test)
     # plt.plot(lambda_, RSS, "ro")
-     lambda_ /= 2
+    #lambda_ /= 2
 
 # 5.7 (continue)
 # The best performance lambda is approximately around 20
-best_lambda = 18
-best_coeff = lasso_solver(best_lambda, feas_rates_test, crime_rates_test)
-pos_highest_var_index = np.argmax(best_coeff)
-neg_lowest_var_index = np.argmin(best_coeff)
-print(pos_highest_var_index)
-print(neg_lowest_var_index)
-print(df_test.columns[pos_highest_var_index])
-print(df_test.columns[neg_lowest_var_index])
+# best_lambda = 18
+# best_coeff = lasso_solver(best_lambda, feas_rates_test, crime_rates_test)
+# pos_highest_var_index = np.argmax(best_coeff)
+# neg_lowest_var_index = np.argmin(best_coeff)
+# print(pos_highest_var_index)
+# print(neg_lowest_var_index)
+# print(df_test.columns[pos_highest_var_index])
+# print(df_test.columns[neg_lowest_var_index])
 
 #plt.plot(,)
 plt.show()
